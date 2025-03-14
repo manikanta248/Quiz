@@ -4,14 +4,17 @@ import { ThemeContext } from "../ThemeContext";
 const AdminScreen = () => {
     const [quizData,setQuizData] = useState([])
     const { theme } = useContext(ThemeContext);
+    const [isLoading,setisLoading] = useState(false);
     useEffect(() => {
             const fetchSkillsData = async () => {
+                setisLoading(true)
               try {
-                const response = await fetch("http://localhost:5000/get-quiz-data/get-quiz-data");
+                const response = await fetch("https://quizbackend-1k43.onrender.com/get-quiz-data/get-quiz-data");
                 if (!response.ok) throw new Error("Failed to fetch quiz data");
                 const data = await response.json();
                 console.log(data)
                 setQuizData(data)
+                setisLoading(false)
                 
                 
               } catch (error) {
@@ -49,7 +52,7 @@ const AdminScreen = () => {
             <div style={{ padding: "20px" ,width:"95vw",display:'flex',flexDirection:"column",alignItems:"center"}}>
                 <h2>Admin Quiz Data</h2>
                 <div style={{ width: "80vw", overflowX: "auto" ,maxHeight:"90vh",overflowY:'scroll',scrollbarWidth:"none"}}>
-                    <table style={tableStyles}>
+                    {!isLoading?<table style={tableStyles}>
                         <thead>
                             <tr>
                                 <th style={tableHeaderStyle}>S.No</th>
@@ -74,7 +77,7 @@ const AdminScreen = () => {
                                 </tr>
                             )}
                         </tbody>
-                    </table>
+                    </table>:"Loading Data..."}
                 </div>
             </div>
         );

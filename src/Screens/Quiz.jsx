@@ -30,7 +30,7 @@ const Quiz = () => {
             }
     
             
-            const response = await fetch("http://localhost:5000/quiz-data/store-quiz-data", {
+            const response = await fetch("https://quizbackend-1k43.onrender.com/quiz-data/store-quiz-data", {
                 method: "POST",
                 headers: {
                     "Content-Type": "application/json",
